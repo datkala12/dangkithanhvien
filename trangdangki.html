@@ -1,0 +1,185 @@
+<html>
+    <head>
+        <title>Nguyễn Thành Đạt</title>
+        <meta charset="utf-8">
+        <style>
+            .container{
+                margin: 10px auto;
+            }
+            #dk h2{
+                text-decoration: underline;
+                text-align: center;
+            }
+            #dk{
+                width: 520px; margin: auto; border: solid 2px rgb(206, 202, 202);
+                font-size: 20px; background-color: rgb(255, 255, 255);
+                padding-left: 5px;
+            }
+            #dk .tuade{background-color: bisque; }
+            #dk lable{
+                width: 200px; display: inline-block; 
+                color: rgb(241, 72, 50); 
+                margin-left: 10px;
+            }
+            #dk .txt{
+                width: 500px; 
+                border: solid 1px rgb(123, 163, 100);
+                padding: 10px;
+                border-radius: 10px;
+            }
+            #dk button{
+                width: 200px; 
+                height: 50px;
+                font-size: 1em; 
+                background-color: rgb(212, 218, 236);
+                text-align: center;
+            }
+            #dk button:hover{
+                color: red; background-color: aquamarine; 
+                text-transform: uppercase;
+            }
+            #dk select{
+                border-radius: 10px;
+                width: 470px;
+                height: 40px;
+                padding-left: 30px;
+            }
+            #dk fieldset{
+                border: 1px solid black;
+                width: 470px;
+                height: 30px;
+                margin: 25px 10px;
+                padding-bottom: 25px;
+            }
+            #dk label{
+                display: inline-block;
+            }
+            #bt{text-align: center;}
+            #dk .loi{
+                width: 400px;
+                padding: 6px;
+                border: 1px solid red;
+                background-color: greenyellow;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <form id="dk" method="post">
+                <p class="tuade"><center>ĐĂNG KÍ THÀNH VIÊN</center></p>                
+                <p>
+                    <lable>Mã sinh viên</lable>
+                    <input type="text" class="txt" id="masv" placeholder="Nhập mã sinh viên của bạn">
+                </p>
+                <p>
+                    <lable>Họ và tên</lable>
+                    <input type="text" class="txt" id="hoten" placeholder="Nhập họ tên của bạn">
+                </p>
+                <p>
+                    <lable>Email</lable>
+                    <input type="email" class="txt" id="email" placeholder="Nhập email của bạn">
+                </p>
+                <fieldset id="fs1">
+                    <legend>Giới tính</legend>
+                        <input type="radio" value="0" name="phai">Nữ
+                        <input type="radio" value="1" name="phai">Nam
+                        <input type="radio" value="2" name="phai">Khác
+                </fieldset>
+                <fieldset id="fs2">
+                    <legend>Sở thích</legend>
+                    <input type="checkbox" name="st" class="n">Đọc sách
+                        <input type="checkbox" name="st" class="n">Game
+                        <input type="checkbox" name="st" class="n">Du lịch
+                        <input type="checkbox" name="st" class="n">Đánh đàn
+                        <input type="checkbox" name="st" class="n">Khác
+                </fieldset>
+                <p>
+                    <lable>Quốc tịch</lable>
+                    <br>
+                    <div id="qt" class="qt">
+                        <select name="qt">
+                        <option value="0">Chọn quốc tịch</option>
+                        <option value="1">Việt Nam</option>
+                        <option value="2">Mĩ</option>
+                        <option value="3">Nga</option>
+                        <option value="4">Khác</option></select>
+                    </div>  
+                </p>
+                <p>
+                    <lable>Ghi chú</lable><br>
+                    <textarea class="txt" id="ghichu" cols="65" rows="8"></textarea>
+                </p>    
+                <div id="baoloi"></div>  
+                <div id="bt">
+                    <button type="button" onclick="return kiemtra();" id="dangki">Đăng ký</button>
+                </div>              
+            </form>
+        </div>
+    </body>
+</html>
+<script>
+    function kiemtra(){
+        var loi="";
+        //mã sinh viên
+        var masv=document.getElementById("masv");
+        if(masv.value==""){
+            masv.className="loi";
+            loi+="Mã sinh viên không được bỏ trống<br>";
+        }else if(masv.value.length!=7){
+            masv.className="loi";
+            loi+="Mã sinh viên chưa đủ 7 kí tự<br>";
+        }else masv.className="txt";
+        //họ tên
+        var hoten=document.getElementById("hoten");
+        if(hoten.value==""){
+            hoten.className="loi";
+            loi+="Họ tên không được bỏ trống<br>";
+        }else if(hoten.value.length>30){
+            hoten.className="loi";
+            loi+="Họ tên quá dài so với qui định<br>";
+        }else hoten.className="txt";
+
+        var email=document.getElementById("email");
+        if(email.value==""){
+            email.className="loi";
+            loi+="Email không được bỏ trống<br>";
+        }
+        //giới tính
+        dem=0;
+        var arr_phai=document.getElementsByName("phai");
+        for(var i =0; i<arr_phai.length;i++){
+            if(arr_phai[i].checked == true) dem++;
+        }
+        if(dem == 0){
+            document.getElementById("fs1").className="loi";
+            loi+="Vui lòng chọn giới tính";
+        }else document.getElementById("fs1").className="";
+        //sở thích
+        arr_sothich= document.getElementsByName("st");
+        dem=0;
+        for(var i=0; i<arr_sothich.length;i++){
+            if(arr_sothich[i].checked) dem++;
+        }
+        if(dem == 0){
+            document.getElementById("fs2").className="loi";
+            loi+="Vui lòng chọn ít nhất 1 sở thích";
+        }else document.getElementById("fs2").className="";
+        //quốc tịch
+        var qt=document.getElementById("quoctich");
+        if(qt.value==0){
+            qt.className="loi";
+            loi+="Phải chọn quốc tịch<br>";
+        }else qt.className="txt";
+        //ghi chú
+        var gc=document.getElementById('ghichu');
+        if(gc.value.length>200){
+            gc.className="loi";
+            loi+="Ghi chú nhiều quá 200 kí tự<br>";
+        }else gc.className="txt";
+
+        if(loi!=""){
+            document.getElementById('baoloi').innerHTML=loi;
+            return false;
+        }
+    }
+</script>
